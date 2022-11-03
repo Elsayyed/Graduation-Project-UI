@@ -50,7 +50,7 @@ class _MyAppState extends State<MyApp> {
             title: 'Flutter Demo',
             theme: Styles.themeData(themeProvider.getTheme, context),
             home: const BottomBarScreen());
-            // home: const HomeScreen());
+        // home: const HomeScreen());
       }),
     );
   }
