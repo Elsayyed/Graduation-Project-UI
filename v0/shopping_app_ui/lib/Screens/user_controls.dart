@@ -115,22 +115,24 @@ class _UserScreenState extends State<UserScreen> {
     await showDialog(
         context: context,
         builder: (context) {
-          return const AlertDialog(
-            title: Text('Log out'),
-            content: Text('Are you sure you want to log out?'),
+          return AlertDialog(
+            title: const Text('Log out'),
+            content: const Text('Are you sure you want to log out?'),
             actions: [
               TextButton(
-                onPressed: null,
-                child: Text('Yes',
+                onPressed: () {
+                  if (Navigator.canPop(context)) Navigator.pop(context);
+                },
+                child: Text('No',
                     style: TextStyle(
-                      color: Colors.red,
+                      color: Colors.green,
                     )),
               ),
-              TextButton(
+              const TextButton(
                 onPressed: null,
                 child: Text(
-                  'No',
-                  style: TextStyle(color: Colors.green),
+                  'Yes',
+                  style: TextStyle(color: Colors.red),
                 ),
               ),
             ],
