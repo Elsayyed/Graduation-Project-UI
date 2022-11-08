@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shopping_app_ui/widgets/text_widget.dart';
 import '../provider/dark_theme_provider.dart';
+import '../services/utils.dart';
 
 class CategoriesWidget extends StatelessWidget {
   const CategoriesWidget(
@@ -16,7 +17,8 @@ class CategoriesWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeState = Provider.of<DarkThemeProvider>(context);
-    double _screenWidth = MediaQuery.of(context).size.width;
+    var utils = Utils(context);
+
     final Color color = themeState.getTheme ? Colors.white : Colors.black;
     return InkWell(
       onTap: () {
@@ -34,8 +36,8 @@ class CategoriesWidget extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              height: _screenWidth * 0.3,
-              width: _screenWidth * 0.3,
+              height: utils.screenHeight * 0.2,
+              width: utils.screenHeight * 0.2,
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage(imgPath),
