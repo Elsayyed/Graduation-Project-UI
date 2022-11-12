@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:shopping_app_ui/services/utils.dart';
+import 'package:shopping_app_ui/widgets/favourite_widget.dart';
 import 'package:shopping_app_ui/widgets/price_widget.dart';
 import 'package:shopping_app_ui/widgets/text_widget.dart';
 
@@ -62,20 +63,18 @@ class _SaleWidgetState extends State<SaleWidget> {
                               color: color,
                             ),
                           ),
-                          GestureDetector(
-                            onTap: () {},
-                            child: Icon(
-                              IconlyLight.heart,
-                              size: 22,
-                              color: color,
-                            ),
-                          ),
+                          favouriteButton(),
                         ],
                       ),
                     ])
                   ],
                 ),
-                PriceWidget(),
+                const PriceWidget(
+                  onSale: true,
+                  price: 5.00,
+                  salePrice: 2.99,
+                  priceCount: '1',
+                ),
                 SizedBox(
                   height: 5,
                 ),
