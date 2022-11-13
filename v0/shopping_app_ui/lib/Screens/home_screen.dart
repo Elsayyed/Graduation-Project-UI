@@ -5,6 +5,8 @@ import 'package:shopping_app_ui/provider/dark_theme_provider.dart';
 import 'package:shopping_app_ui/widgets/price_widget.dart';
 import 'package:shopping_app_ui/widgets/text_widget.dart';
 
+import '../innerScreens/allproducts_page.dart';
+import '../services/utilMethods.dart';
 import '../services/utils.dart';
 import '../widgets/feed_widget.dart';
 import '../widgets/sale_widget.dart';
@@ -39,11 +41,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   quarterTurns: -1,
                   child: Row(
                     children: [
-                      Icon(
+                      const Icon(
                         IconlyLight.dangerCircle,
                         color: Colors.deepOrange,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 6,
                       ),
                       TextWidget(
@@ -84,7 +86,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   Spacer(),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      UtilMethods.navigateTo(
+                          context: context,
+                          routeName: productsScreen.routeName);
+                    },
                     child: TextWidget(
                       text: 'Browse all',
                       color: Colors.lightBlue,

@@ -7,6 +7,8 @@ import 'package:shopping_app_ui/provider/dark_theme_provider.dart';
 import 'constants/theme_info.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'innerScreens/allproducts_page.dart';
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
@@ -49,6 +51,9 @@ class _MyAppState extends State<MyApp> {
             debugShowCheckedModeBanner: false,
             title: 'Flutter Demo',
             theme: Styles.themeData(themeProvider.getTheme, context),
+            routes: {
+              productsScreen.routeName: (context) => const productsScreen()
+            },
             home: const BottomBarScreen());
         // home: const HomeScreen());
       }),
