@@ -8,6 +8,7 @@ import 'constants/theme_info.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'innerScreens/allproducts_page.dart';
+import 'innerScreens/product_details.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -49,10 +50,11 @@ class _MyAppState extends State<MyApp> {
           Consumer<DarkThemeProvider>(builder: (context, themeProvider, child) {
         return MaterialApp(
             debugShowCheckedModeBanner: false,
-            title: 'Flutter Demo',
+            title: 'Shopping Assistant Cart',
             theme: Styles.themeData(themeProvider.getTheme, context),
             routes: {
-              productsScreen.routeName: (context) => const productsScreen()
+              productsScreen.routeName: (context) => const productsScreen(),
+              productDetails.routeName: (context) => const productDetails()
             },
             home: const BottomBarScreen());
         // home: const HomeScreen());

@@ -101,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
               child: GridView.count(
                 padding: EdgeInsets.zero,
                 shrinkWrap: true,
@@ -109,7 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 crossAxisCount: 2,
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
-                childAspectRatio: screenSize.width / (screenSize.height * 0.62),
+                childAspectRatio: screenSize.width / (screenSize.height * 0.6),
                 children: List.generate(4, (index) {
                   return const FeedWidget();
                 }),

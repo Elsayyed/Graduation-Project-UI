@@ -3,6 +3,8 @@ import 'package:shopping_app_ui/widgets/favourite_widget.dart';
 import 'package:shopping_app_ui/widgets/price_widget.dart';
 import 'package:shopping_app_ui/widgets/text_widget.dart';
 
+import '../innerScreens/product_details.dart';
+import '../services/utilMethods.dart';
 import '../services/utils.dart';
 
 class FeedWidget extends StatefulWidget {
@@ -13,7 +15,7 @@ class FeedWidget extends StatefulWidget {
 }
 
 class _FeedWidgetState extends State<FeedWidget> {
-  final _quantityController = TextEditingController(text: '1');
+  final _quantityController = TextEditingController();
 
   @override
   void initState() {
@@ -38,7 +40,10 @@ class _FeedWidgetState extends State<FeedWidget> {
       borderRadius: BorderRadius.circular(12),
       color: Theme.of(context).cardColor,
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          UtilMethods.navigateTo(
+              context: context, routeName: productDetails.routeName);
+        },
         borderRadius: BorderRadius.circular(12),
         child: Column(children: [
           Image.network(

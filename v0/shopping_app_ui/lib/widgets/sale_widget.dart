@@ -5,6 +5,9 @@ import 'package:shopping_app_ui/widgets/favourite_widget.dart';
 import 'package:shopping_app_ui/widgets/price_widget.dart';
 import 'package:shopping_app_ui/widgets/text_widget.dart';
 
+import '../innerScreens/product_details.dart';
+import '../services/utilMethods.dart';
+
 class SaleWidget extends StatefulWidget {
   const SaleWidget({Key? key}) : super(key: key);
 
@@ -18,6 +21,7 @@ class _SaleWidgetState extends State<SaleWidget> {
     final theme = Utils(context).getTheme;
     Size _screenSize = Utils(context).screenSize;
     Color color = Utils(context).color;
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Material(
@@ -26,7 +30,10 @@ class _SaleWidgetState extends State<SaleWidget> {
         borderRadius: BorderRadius.circular(12),
         child: InkWell(
           borderRadius: BorderRadius.circular(12),
-          onTap: () {},
+          onTap: () {
+            UtilMethods.navigateTo(
+                context: context, routeName: productDetails.routeName);
+          },
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(

@@ -15,6 +15,20 @@ class productsScreen extends StatefulWidget {
 }
 
 class _productsScreenState extends State<productsScreen> {
+  final _searchBoxController = TextEditingController(text: '1');
+
+  @override
+  void initState() {
+    _searchBoxController.text = '1';
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _searchBoxController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Utils(context).getTheme;
@@ -42,21 +56,40 @@ class _productsScreenState extends State<productsScreen> {
             isTitle: true,
           ),
         ),
-        body: Column(
-          children: [
-            GridView.count(
-              padding: EdgeInsets.zero,
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              crossAxisCount: 2,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
-              childAspectRatio: _screenSize.width / (_screenSize.height * 0.62),
-              children: List.generate(4, (index) {
-                return const FeedWidget();
-              }),
-            ),
-          ],
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+                child: TextFormField(
+                  controller: _searchBoxController,
+                  onChanged: (val) {
+                    setState(() {});
+                  },
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    hintText: 'What are you looking for? ',
+                    prefixIcon: const Icon(IconlyLight.search),
+                  ),
+                ),
+              ),
+              GridView.count(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                crossAxisCount: 2,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+                childAspectRatio:
+                    _screenSize.width / (_screenSize.height * 0.60),
+                children: List.generate(8, (index) {
+                  return const FeedWidget();
+                }),
+              ),
+            ],
+          ),
         ));
   }
 }
