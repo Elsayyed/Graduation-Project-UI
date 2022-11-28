@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:shopping_app_ui/services/utilMethods.dart';
 import 'package:shopping_app_ui/widgets/text_widget.dart';
 
-import '../services/utils.dart';
+import '../../services/utils.dart';
 import 'cart_widget.dart';
 
 class CartScreen extends StatelessWidget {
@@ -27,7 +28,13 @@ class CartScreen extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              UtilMethods.warningDialogPopUp(
+                  title: 'Empty the cart?',
+                  subText: 'Are you sure?',
+                  functionHandle: () {},
+                  context: context);
+            },
             icon: Icon(
               IconlyLight.delete,
               color: color,

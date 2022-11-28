@@ -54,7 +54,7 @@ class _MyAppState extends State<MyApp> {
             theme: Styles.themeData(themeProvider.getTheme, context),
             routes: {
               productsScreen.routeName: (context) => const productsScreen(),
-              productDetails.routeName: (context) => const productDetails()
+              productDetails.routeName: (context) => const productDetails(),
             },
             home: const BottomBarScreen());
         // home: const HomeScreen());

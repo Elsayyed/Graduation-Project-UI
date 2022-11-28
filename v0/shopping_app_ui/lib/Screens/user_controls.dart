@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
+import 'package:shopping_app_ui/services/utilMethods.dart';
 
 import '../provider/dark_theme_provider.dart';
 
@@ -92,7 +93,13 @@ class _UserScreenState extends State<UserScreen> {
             _listTitlesMaker(
                 title: 'Logout',
                 iconShape: IconlyLight.logout,
-                onPressed: showLogoutDialog),
+                onPressed: () {
+                  UtilMethods.warningDialogPopUp(
+                      title: 'Log out',
+                      subText: 'Are you sure you want to log out?',
+                      functionHandle: () {},
+                      context: context);
+                }),
             SwitchListTile(
               title: Text('Theme'),
               secondary: Icon(themeState.getTheme
@@ -109,36 +116,6 @@ class _UserScreenState extends State<UserScreen> {
         ),
       ),
     ));
-  }
-
-  Future<void> showLogoutDialog() async {
-    await showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: const Text('Log out'),
-            content: const Text('Are you sure you want to log out?'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  if (Navigator.canPop(context)) Navigator.pop(context);
-                },
-                child: Text('No',
-                    style: TextStyle(
-                      color: Colors.green,
-                    )),
-              ),
-              const TextButton(
-                onPressed: null,
-                child: Text(
-                  'Yes',
-                  style: TextStyle(color: Colors.red),
-                ),
-              ),
-            ],
-            elevation: 48,
-          );
-        });
   }
 
   Widget _listTitlesMaker(

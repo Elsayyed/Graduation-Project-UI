@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:shopping_app_ui/widgets/back_button.dart';
 import 'package:shopping_app_ui/widgets/text_widget.dart';
 
 import '../services/utils.dart';
@@ -37,16 +38,7 @@ class _productsScreenState extends State<productsScreen> {
 
     return Scaffold(
         appBar: AppBar(
-          leading: InkWell(
-            borderRadius: BorderRadius.circular(12),
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: Icon(
-              IconlyLight.arrowLeft2,
-              color: color,
-            ),
-          ),
+          leading: const BackArrow(),
           elevation: 2,
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           title: TextWidget(

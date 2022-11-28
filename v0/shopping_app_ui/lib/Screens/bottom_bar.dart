@@ -5,8 +5,8 @@ import 'package:shopping_app_ui/Screens/home_screen.dart';
 import 'package:shopping_app_ui/Screens/user_controls.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 
-import '../cart/cart_screen.dart';
 import '../provider/dark_theme_provider.dart';
+import 'cart/cart_screen.dart';
 
 class BottomBarScreen extends StatefulWidget {
   const BottomBarScreen({Key? key}) : super(key: key);
@@ -64,7 +64,6 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
           BottomNavigationBarItem(
             icon: Icon(_selectedIndex == 2 ? IconlyBold.buy : IconlyLight.buy),
             label: "Cart",
-            backgroundColor: Colors.white,
           ),
           BottomNavigationBarItem(
             icon: Icon(

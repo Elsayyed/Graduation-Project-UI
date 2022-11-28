@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:shopping_app_ui/widgets/text_widget.dart';
 
-import '../innerScreens/product_details.dart';
-import '../services/utilMethods.dart';
-import '../services/utils.dart';
-import '../widgets/favourite_widget.dart';
+import '../../innerScreens/product_details.dart';
+import '../../services/utilMethods.dart';
+import '../../services/utils.dart';
+import '../../widgets/favourite_widget.dart';
 
 class CartWidget extends StatefulWidget {
   const CartWidget({Key? key}) : super(key: key);
@@ -73,7 +73,16 @@ class _CartWidgetState extends State<CartWidget> {
                 child: Row(
                   children: [
                     quantityWidget(
-                      functionHandle: () {},
+                      functionHandle: () {
+                        setState(() {
+                          if (_quantityController.text == '1') {
+                            return;
+                          } else
+                            _quantityController.text =
+                                (int.parse(_quantityController.text) - 1)
+                                    .toString();
+                        });
+                      },
                       icon: IconlyLight.arrowDown,
                       color: Colors.red,
                     ),
@@ -89,7 +98,13 @@ class _CartWidgetState extends State<CartWidget> {
                       ),
                     ),
                     quantityWidget(
-                      functionHandle: () {},
+                      functionHandle: () {
+                        setState(() {
+                          _quantityController.text =
+                              (int.parse(_quantityController.text) + 1)
+                                  .toString();
+                        });
+                      },
                       icon: IconlyLight.arrowUp,
                       color: Colors.green,
                     ),
