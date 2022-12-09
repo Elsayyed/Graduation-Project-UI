@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shopping_app_ui/innerScreens/category_page.dart';
 import 'package:shopping_app_ui/widgets/text_widget.dart';
 import '../provider/dark_theme_provider.dart';
 import '../services/utils.dart';
@@ -22,7 +23,11 @@ class CategoriesWidget extends StatelessWidget {
     final Color color = themeState.getTheme ? Colors.white : Colors.black;
     return InkWell(
       onTap: () {
-        print('Category pressed');
+        Navigator.pushNamed(
+          context,
+          categoryScreen.routeName,
+          arguments: catName,
+        );
       },
       child: Container(
         decoration: BoxDecoration(

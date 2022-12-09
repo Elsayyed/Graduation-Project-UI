@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:provider/provider.dart';
 import 'package:shopping_app_ui/services/utilMethods.dart';
 import 'package:shopping_app_ui/widgets/text_widget.dart';
+import '../../provider/cart_provider.dart';
 import '../../services/utils.dart';
 import 'cart_widget.dart';
 
@@ -15,13 +17,15 @@ class CartScreen extends StatelessWidget {
     Color color = Utils(context).color;
     int cartVal = 3;
     double totalPrice = 0.29 * 6;
+    final cartProvider = Provider.of<CartProvider>(context);
+    final carItemList = cartProvider.getCartItems.values.toList();
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 1,
         title: TextWidget(
-          text: 'Cart (${cartVal})',
+          text: 'Cart (${carItemList.length})',
           color: color,
           textSize: 20,
           isTitle: true,
@@ -68,9 +72,10 @@ class CartScreen extends StatelessWidget {
           ),
           Expanded(
             child: ListView.builder(
-                itemCount: 10,
+                itemCount: carItemList.length,
                 itemBuilder: (ctx, index) {
-                  return const CartWidget();
+                  return ChangeNotifierProvider.value(
+                      value: carItemList[index], child: CartWidget());
                 }),
           ),
         ],

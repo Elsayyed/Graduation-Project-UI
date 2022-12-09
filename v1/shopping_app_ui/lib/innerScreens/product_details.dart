@@ -38,7 +38,6 @@ class _productDetailsState extends State<productDetails> {
     double usedPrice = getCurrentProd.isOnSale
         ? getCurrentProd.salePrice
         : getCurrentProd.price;
-
     double totalPrice = usedPrice * int.parse(_quantityController.text);
     return Scaffold(
       appBar: AppBar(

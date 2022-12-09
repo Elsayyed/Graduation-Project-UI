@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
 import 'package:shopping_app_ui/constants/consts.dart';
+import 'package:shopping_app_ui/provider/cart_provider.dart';
 import 'package:shopping_app_ui/widgets/back_button.dart';
 import 'package:shopping_app_ui/widgets/text_widget.dart';
 
@@ -20,11 +21,11 @@ class productsScreen extends StatefulWidget {
 }
 
 class _productsScreenState extends State<productsScreen> {
-  final _searchBoxController = TextEditingController(text: '1');
+  final _searchBoxController = TextEditingController(text: '');
 
   @override
   void initState() {
-    _searchBoxController.text = '1';
+    _searchBoxController.text = '';
     super.initState();
   }
 

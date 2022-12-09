@@ -9,6 +9,7 @@ import 'package:shopping_app_ui/widgets/text_widget.dart';
 
 import '../innerScreens/product_details.dart';
 import '../models/productModel.dart';
+import '../provider/cart_provider.dart';
 import '../provider/products_provider.dart';
 import '../services/utilMethods.dart';
 
@@ -26,6 +27,7 @@ class _SaleWidgetState extends State<SaleWidget> {
     Size _screenSize = Utils(context).screenSize;
     Color color = Utils(context).color;
     final productModel = Provider.of<ProductModel>(context);
+    final cartProvider = Provider.of<CartProvider>(context);
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -73,7 +75,12 @@ class _SaleWidgetState extends State<SaleWidget> {
                       Row(
                         children: [
                           GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              cartProvider.addProductToCart(
+                                productId: productModel.id,
+                                quantity: 1,
+                              );
+                            },
                             child: Icon(
                               IconlyLight.bag,
                               size: 22,

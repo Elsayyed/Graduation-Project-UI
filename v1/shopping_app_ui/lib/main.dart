@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:shopping_app_ui/Screens/bottom_bar.dart';
 import 'package:shopping_app_ui/Screens/home_screen.dart';
+import 'package:shopping_app_ui/innerScreens/category_page.dart';
+import 'package:shopping_app_ui/provider/cart_provider.dart';
 import 'package:shopping_app_ui/provider/dark_theme_provider.dart';
 import 'package:shopping_app_ui/provider/products_provider.dart';
 import 'constants/theme_info.dart';
@@ -49,6 +51,9 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(create: (_) {
           return ProductsProvider();
         }),
+        ChangeNotifierProvider(create: (_) {
+          return CartProvider();
+        }),
       ],
       child:
           Consumer<DarkThemeProvider>(builder: (context, themeProvider, child) {
@@ -59,6 +64,7 @@ class _MyAppState extends State<MyApp> {
             routes: {
               productsScreen.routeName: (context) => const productsScreen(),
               productDetails.routeName: (context) => const productDetails(),
+              categoryScreen.routeName: (context) => const categoryScreen(),
             },
             home: const BottomBarScreen());
         // home: const HomeScreen());

@@ -3,6 +3,7 @@ import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
 import 'package:shopping_app_ui/innerScreens/allproducts_page.dart';
 import 'package:shopping_app_ui/innerScreens/product_details.dart';
+import 'package:shopping_app_ui/models/cartModel.dart';
 import 'package:shopping_app_ui/widgets/text_widget.dart';
 import '../../models/productModel.dart';
 import '../../provider/products_provider.dart';
@@ -27,18 +28,20 @@ class _CartWidgetState extends State<CartWidget> {
     final theme = Utils(context).getTheme;
     Size _screenSize = Utils(context).screenSize;
     Color color = Utils(context).color;
+    final productProvider = Provider.of<ProductsProvider>(context);
+    final cartModel = Provider.of<CartModel>(context);
+
+    final getCurrentProd = productProvider.findProdById(cartModel.productId);
+    double usedPrice = getCurrentProd.isOnSale
+        ? getCurrentProd.salePrice
+        : getCurrentProd.price;
+    double totalPrice = usedPrice * int.parse(_quantityController.text);
 
     @override
     void dispose() {
       _quantityController.dispose();
       super.dispose();
     }
-
-    // @override
-    // void initState() {
-    //   _quantityController.text = '';
-    //   super.dispose();
-    // }
 
     //TODO: LIMIT THE KEYBOARD TO ONLY INTEGER VALUES
     return GestureDetector(
@@ -69,7 +72,7 @@ class _CartWidgetState extends State<CartWidget> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               TextWidget(
-                text: 'Pomegranate',
+                text: getCurrentProd.title,
                 color: color,
                 textSize: 20,
                 isTitle: true,
@@ -86,10 +89,11 @@ class _CartWidgetState extends State<CartWidget> {
                         setState(() {
                           if (_quantityController.text == '1') {
                             return;
-                          } else
+                          } else {
                             _quantityController.text =
                                 (int.parse(_quantityController.text) - 1)
                                     .toString();
+                          }
                         });
                       },
                       icon: IconlyLight.arrowDown,
@@ -102,8 +106,8 @@ class _CartWidgetState extends State<CartWidget> {
                         textAlign: TextAlign.center,
                         keyboardType: TextInputType.number,
                         maxLines: 1,
-                        decoration:
-                            InputDecoration(border: UnderlineInputBorder()),
+                        decoration: const InputDecoration(
+                            border: UnderlineInputBorder()),
                       ),
                     ),
                     quantityWidget(
@@ -124,7 +128,7 @@ class _CartWidgetState extends State<CartWidget> {
           ),
           const Spacer(),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 5),
+            padding: const EdgeInsets.symmetric(horizontal: 5),
             child: Column(
               children: [
                 InkWell(

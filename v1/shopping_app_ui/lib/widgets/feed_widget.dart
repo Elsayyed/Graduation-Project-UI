@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shopping_app_ui/models/cartModel.dart';
 import 'package:shopping_app_ui/widgets/favourite_widget.dart';
 import 'package:shopping_app_ui/widgets/price_widget.dart';
 import 'package:shopping_app_ui/widgets/text_widget.dart';
 
 import '../innerScreens/product_details.dart';
 import '../models/productModel.dart';
+import '../provider/cart_provider.dart';
 import '../provider/products_provider.dart';
 import '../services/utilMethods.dart';
 import '../services/utils.dart';
@@ -38,6 +40,7 @@ class _FeedWidgetState extends State<FeedWidget> {
     Size _screenSize = Utils(context).screenSize;
     Color color = Utils(context).color;
     final productModel = Provider.of<ProductModel>(context);
+    final cartProvider = Provider.of<CartProvider>(context);
 
     return Material(
       elevation: 4,
@@ -122,7 +125,12 @@ class _FeedWidgetState extends State<FeedWidget> {
           SizedBox(
             width: double.infinity,
             child: TextButton(
-              onPressed: () {},
+              onPressed: () {
+                cartProvider.addProductToCart(
+                  productId: productModel.id,
+                  quantity: int.parse(_quantityController.text),
+                );
+              },
               style: ButtonStyle(
                 backgroundColor:
                     MaterialStateProperty.all(Theme.of(context).cardColor),
