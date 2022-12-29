@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
 
+import '../provider/cart_provider.dart';
 import '../provider/products_provider.dart';
 import '../services/utils.dart';
 import '../widgets/favourite_widget.dart';
@@ -35,9 +36,13 @@ class _productDetailsState extends State<productDetails> {
     final productProvider = Provider.of<ProductsProvider>(context);
     final productId = ModalRoute.of(context)!.settings.arguments as String;
     final getCurrentProd = productProvider.findProdById(productId);
+    final cartProvider = Provider.of<CartProvider>(context);
+    bool? isInCart = cartProvider.getCartItems.containsKey(getCurrentProd.id);
+
     double usedPrice = getCurrentProd.isOnSale
         ? getCurrentProd.salePrice
         : getCurrentProd.price;
+
     double totalPrice = usedPrice * int.parse(_quantityController.text);
     return Scaffold(
       appBar: AppBar(
@@ -96,7 +101,7 @@ class _productDetailsState extends State<productDetails> {
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 12,
           ),
           Padding(
@@ -123,9 +128,10 @@ class _productDetailsState extends State<productDetails> {
                   setState(() {
                     if (_quantityController.text == '1') {
                       return;
-                    } else
+                    } else {
                       _quantityController.text =
                           (int.parse(_quantityController.text) - 1).toString();
+                    }
                   });
                 },
                 icon: IconlyLight.arrowDown,
@@ -177,7 +183,7 @@ class _productDetailsState extends State<productDetails> {
                           textSize: 20,
                           isTitle: true,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 5,
                         ),
                         Row(
@@ -203,12 +209,17 @@ class _productDetailsState extends State<productDetails> {
                       color: Colors.green,
                       borderRadius: BorderRadius.circular(12),
                       child: InkWell(
-                        onTap: () {},
+                        onTap: isInCart ? null : () {
+                          cartProvider.addProductToCart(
+                              productId: getCurrentProd.id,
+                              quantity: int.parse(_quantityController.text),
+                          );
+                        },
                         borderRadius: BorderRadius.circular(12),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: TextWidget(
-                              text: 'Add to cart', color: color, textSize: 20),
+                              text: isInCart? 'In cart' : 'Add to cart', color: color, textSize: 20),
                         ),
                       ),
                     ),

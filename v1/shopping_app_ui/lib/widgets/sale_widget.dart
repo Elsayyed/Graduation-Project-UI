@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
-import 'package:shopping_app_ui/innerScreens/allproducts_page.dart';
 import 'package:shopping_app_ui/services/utils.dart';
 import 'package:shopping_app_ui/widgets/favourite_widget.dart';
 import 'package:shopping_app_ui/widgets/price_widget.dart';
@@ -10,8 +9,6 @@ import 'package:shopping_app_ui/widgets/text_widget.dart';
 import '../innerScreens/product_details.dart';
 import '../models/productModel.dart';
 import '../provider/cart_provider.dart';
-import '../provider/products_provider.dart';
-import '../services/utilMethods.dart';
 
 class SaleWidget extends StatefulWidget {
   const SaleWidget({Key? key}) : super(key: key);
@@ -28,6 +25,7 @@ class _SaleWidgetState extends State<SaleWidget> {
     Color color = Utils(context).color;
     final productModel = Provider.of<ProductModel>(context);
     final cartProvider = Provider.of<CartProvider>(context);
+    bool? isInCart = cartProvider.getCartItems.containsKey(productModel.id);
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -75,16 +73,16 @@ class _SaleWidgetState extends State<SaleWidget> {
                       Row(
                         children: [
                           GestureDetector(
-                            onTap: () {
+                            onTap: isInCart ? null : () {
                               cartProvider.addProductToCart(
                                 productId: productModel.id,
                                 quantity: 1,
                               );
                             },
                             child: Icon(
-                              IconlyLight.bag,
+                              isInCart ?  IconlyBold.bag: IconlyLight.bag,
                               size: 22,
-                              color: color,
+                              color: isInCart ? Colors.green[500] : color,
                             ),
                           ),
                           favouriteButton(),

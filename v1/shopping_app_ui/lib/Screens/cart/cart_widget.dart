@@ -1,28 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
-import 'package:shopping_app_ui/innerScreens/allproducts_page.dart';
 import 'package:shopping_app_ui/innerScreens/product_details.dart';
 import 'package:shopping_app_ui/models/cartModel.dart';
 import 'package:shopping_app_ui/widgets/text_widget.dart';
-import '../../models/productModel.dart';
+import '../../provider/cart_provider.dart';
 import '../../provider/products_provider.dart';
-import '../../services/utilMethods.dart';
 import '../../services/utils.dart';
 import '../../widgets/favourite_widget.dart';
 
 class CartWidget extends StatefulWidget {
-  const CartWidget({Key? key}) : super(key: key);
-
+  const CartWidget({Key? key, required this.quantity}) : super(key: key);
+  final int quantity;
   @override
   State<CartWidget> createState() => _CartWidgetState();
 }
 
 class _CartWidgetState extends State<CartWidget> {
-  final String pom =
-      "https://purepng.com/public/uploads/large/purepng.com-pomegranatepomegranatepunica-granatumfruit-bearingshrub-1701527359553pgiat.png";
   final _quantityController = TextEditingController(text: '1');
 
+  @override
+  void initState() {
+    _quantityController.text = widget.quantity.toString();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     final theme = Utils(context).getTheme;
@@ -30,6 +31,7 @@ class _CartWidgetState extends State<CartWidget> {
     Color color = Utils(context).color;
     final productProvider = Provider.of<ProductsProvider>(context);
     final cartModel = Provider.of<CartModel>(context);
+    final cartProvider = Provider.of<CartProvider>(context);
 
     final getCurrentProd = productProvider.findProdById(cartModel.productId);
     double usedPrice = getCurrentProd.isOnSale
@@ -46,8 +48,11 @@ class _CartWidgetState extends State<CartWidget> {
     //TODO: LIMIT THE KEYBOARD TO ONLY INTEGER VALUES
     return GestureDetector(
       onTap: () {
-        // UtilMethods.navigateTo(
-        //     context: context, routeName: productDetails.routeName);
+        Navigator.pushNamed(
+          context,
+          productDetails.routeName,
+          arguments: cartModel.productId,
+        );
       },
       child: Row(
         children: [
@@ -63,7 +68,7 @@ class _CartWidgetState extends State<CartWidget> {
                 height: _screenSize.height * 0.25,
                 decoration:
                     BoxDecoration(borderRadius: BorderRadius.circular(12.0)),
-                child: Image.network(pom)),
+                child: Image.network(getCurrentProd.imageLink)),
           ),
           const SizedBox(
             width: 16,
@@ -90,6 +95,7 @@ class _CartWidgetState extends State<CartWidget> {
                           if (_quantityController.text == '1') {
                             return;
                           } else {
+                            cartProvider.decreaseQuantityByOne(getCurrentProd.id);
                             _quantityController.text =
                                 (int.parse(_quantityController.text) - 1)
                                     .toString();
@@ -112,6 +118,7 @@ class _CartWidgetState extends State<CartWidget> {
                     ),
                     quantityWidget(
                       functionHandle: () {
+                        cartProvider.increaseQuantityByOne(getCurrentProd.id);
                         setState(() {
                           _quantityController.text =
                               (int.parse(_quantityController.text) + 1)
@@ -132,19 +139,21 @@ class _CartWidgetState extends State<CartWidget> {
             child: Column(
               children: [
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    cartProvider.removeItem(getCurrentProd.id);
+                  },
                   child: const Icon(
                     Icons.remove_shopping_cart_outlined,
                     color: Colors.red,
                     size: 28,
                   ),
                 ),
-                SizedBox(
+               const SizedBox(
                   height: 4,
                 ),
                 const favouriteButton(),
                 TextWidget(
-                  text: '\$0.29',
+                  text: '\$${usedPrice.toStringAsFixed(2)}',
                   color: color,
                   textSize: 18,
                   maxLines: 1,

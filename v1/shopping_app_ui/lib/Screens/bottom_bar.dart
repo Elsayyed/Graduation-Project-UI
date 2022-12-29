@@ -5,7 +5,9 @@ import 'package:shopping_app_ui/Screens/home_screen.dart';
 import 'package:shopping_app_ui/Screens/user_controls.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 
+import '../provider/cart_provider.dart';
 import '../provider/dark_theme_provider.dart';
+import '../provider/products_provider.dart';
 import 'cart/cart_screen.dart';
 
 class BottomBarScreen extends StatefulWidget {
@@ -35,6 +37,7 @@ class _BottomBarScreenState extends State<BottomBarScreen> {
   Widget build(BuildContext context) {
     final themeState = Provider.of<DarkThemeProvider>(context);
     bool _isDark = themeState.getTheme;
+
     return Scaffold(
       body: _pages[_selectedIndex]['page'],
       // appBar: AppBar(

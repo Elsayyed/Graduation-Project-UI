@@ -36,7 +36,9 @@ class CartScreen extends StatelessWidget {
               UtilMethods.warningDialogPopUp(
                   title: 'Empty the cart?',
                   subText: 'Are you sure?',
-                  functionHandle: () {},
+                  functionHandle: () {
+                    cartProvider.clearShoppingCart();
+                  },
                   context: context);
             },
             icon: Icon(
@@ -75,7 +77,9 @@ class CartScreen extends StatelessWidget {
                 itemCount: carItemList.length,
                 itemBuilder: (ctx, index) {
                   return ChangeNotifierProvider.value(
-                      value: carItemList[index], child: CartWidget());
+                      value: carItemList[index], child: CartWidget(
+                      quantity: carItemList[index].quantity,
+                  ));
                 }),
           ),
         ],

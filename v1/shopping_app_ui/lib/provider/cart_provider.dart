@@ -15,5 +15,39 @@ class CartProvider with ChangeNotifier {
               productId,
               quantity,
             ));
+    notifyListeners();
   }
+
+  void decreaseQuantityByOne(String productId){
+    _cartItems.update(productId, (value) =>
+        CartModel(
+          value.id,
+          productId,
+          value.quantity -1,
+        ),
+    );
+    notifyListeners();
+  }
+
+  void increaseQuantityByOne(String productId){
+    _cartItems.update(productId, (value) =>
+        CartModel(
+          value.id,
+          productId,
+          value.quantity + 1,
+        ),
+    );
+    notifyListeners();
+  }
+
+  void removeItem(String productId) {
+    _cartItems.remove(productId);
+    notifyListeners();
+  }
+
+  void clearShoppingCart() {
+    _cartItems.clear();
+    notifyListeners();
+  }
+
 }

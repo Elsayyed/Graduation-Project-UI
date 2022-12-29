@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shopping_app_ui/models/cartModel.dart';
@@ -41,15 +43,13 @@ class _FeedWidgetState extends State<FeedWidget> {
     Color color = Utils(context).color;
     final productModel = Provider.of<ProductModel>(context);
     final cartProvider = Provider.of<CartProvider>(context);
-
+    bool? isInCart = cartProvider.getCartItems.containsKey(productModel.id);
     return Material(
       elevation: 4,
       borderRadius: BorderRadius.circular(12),
       color: Theme.of(context).cardColor,
       child: InkWell(
         onTap: () {
-          // UtilMethods.navigateTo(
-          //     context: context, routeName: productDetails.routeName);
           Navigator.pushNamed(
             context,
             productDetails.routeName,
@@ -107,7 +107,7 @@ class _FeedWidgetState extends State<FeedWidget> {
                 Flexible(
                   child: TextFormField(
                     keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       contentPadding: EdgeInsets.all(5),
                     ),
                     controller: _quantityController,
@@ -125,7 +125,7 @@ class _FeedWidgetState extends State<FeedWidget> {
           SizedBox(
             width: double.infinity,
             child: TextButton(
-              onPressed: () {
+              onPressed: isInCart ? null : () {
                 cartProvider.addProductToCart(
                   productId: productModel.id,
                   quantity: int.parse(_quantityController.text),
@@ -144,7 +144,12 @@ class _FeedWidgetState extends State<FeedWidget> {
                   ),
                 ),
               ),
-              child: Icon(
+              child: isInCart? TextWidget(
+                text: 'In Cart',
+                color: color,
+                textSize: 16,
+                isTitle: true,
+              ) : Icon(
                 Icons.add_business_rounded,
                 size: 25,
                 color: theme
