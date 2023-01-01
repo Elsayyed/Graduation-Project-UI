@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -7,6 +8,8 @@ import 'package:shopping_app_ui/innerScreens/category_page.dart';
 import 'package:shopping_app_ui/provider/cart_provider.dart';
 import 'package:shopping_app_ui/provider/dark_theme_provider.dart';
 import 'package:shopping_app_ui/provider/products_provider.dart';
+import 'package:shopping_app_ui/widgets/text_widget.dart';
+import 'Screens/fetchDataScreen.dart';
 import 'constants/theme_info.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -29,6 +32,9 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+
+  final Future<FirebaseApp> _initFirebase = Firebase.initializeApp();
+
   @override
   Widget build(BuildContext context) {
     DarkThemeProvider themeProvider = DarkThemeProvider();
@@ -43,32 +49,44 @@ class _MyAppState extends State<MyApp> {
       super.initState();
     }
 
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) {
-          return themeProvider;
-        }),
-        ChangeNotifierProvider(create: (_) {
-          return ProductsProvider();
-        }),
-        ChangeNotifierProvider(create: (_) {
-          return CartProvider();
-        }),
-      ],
-      child:
-          Consumer<DarkThemeProvider>(builder: (context, themeProvider, child) {
-        return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            title: 'Shopping Assistant Cart',
-            theme: Styles.themeData(themeProvider.getTheme, context),
-            routes: {
-              productsScreen.routeName: (context) => const productsScreen(),
-              productDetails.routeName: (context) => const productDetails(),
-              categoryScreen.routeName: (context) => const categoryScreen(),
-            },
-            home: const BottomBarScreen());
-        // home: const HomeScreen());
-      }),
+    return FutureBuilder(
+      future: _initFirebase,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting){
+          return const MaterialApp(home:
+          Scaffold(body: Center(child: CircularProgressIndicator(),),),);
+        }
+        else if (snapshot.hasError){
+          MaterialApp(home: Scaffold(body: Center(child: TextWidget(text: 'An error has occurred', textSize: 18, color: Colors.red, isTitle: true,),),),);
+        }
+        return MultiProvider(
+          providers: [
+            ChangeNotifierProvider(create: (_) {
+              return themeProvider;
+            }),
+            ChangeNotifierProvider(create: (_) {
+              return ProductsProvider();
+            }),
+            ChangeNotifierProvider(create: (_) {
+              return CartProvider();
+            }),
+          ],
+          child:
+              Consumer<DarkThemeProvider>(builder: (context, themeProvider, child) {
+            return MaterialApp(
+                debugShowCheckedModeBanner: false,
+                title: 'Shopping Assistant Cart',
+                theme: Styles.themeData(themeProvider.getTheme, context),
+                routes: {
+                  productsScreen.routeName: (context) => const productsScreen(),
+                  productDetails.routeName: (context) => const productDetails(),
+                  categoryScreen.routeName: (context) => const categoryScreen(),
+                },
+                home: const FetchScreen());
+            // home: const HomeScreen());
+          }),
+        );
+      }
     );
   }
 }

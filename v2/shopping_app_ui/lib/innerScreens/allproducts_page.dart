@@ -26,6 +26,8 @@ class _productsScreenState extends State<productsScreen> {
   @override
   void initState() {
     _searchBoxController.text = '';
+    final productsProvider = Provider.of<ProductsProvider>(context, listen: false);
+    productsProvider.fetchProducts();
     super.initState();
   }
 

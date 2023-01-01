@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1001752519762",
+    "project_id": "asas-69358",
+    "storage_bucket": "asas-69358.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1001752519762:android:3be3637fa6c66dda556b8b",
+        "android_client_info": {
+          "package_name": "com.example.shopping_app_ui"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1001752519762-jscogqagfgjt2bae760ha1k69id8ookr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBzuoLi8f2k3Y37gBmHZJ2D4PofhwVaehc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1001752519762-jscogqagfgjt2bae760ha1k69id8ookr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

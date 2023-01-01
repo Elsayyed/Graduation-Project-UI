@@ -1,3 +1,6 @@
-import '../models/productModel.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class consts_class {}
+final FirebaseAuth authInstance = FirebaseAuth.instance;
+final User? user = authInstance.currentUser;
+final userId = user?.uid;
+

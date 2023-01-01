@@ -1,10 +1,11 @@
-import 'package:flutter/cupertino.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
+import 'package:shopping_app_ui/constants/consts.dart';
 import 'package:shopping_app_ui/services/utilMethods.dart';
-
 import '../provider/dark_theme_provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class UserScreen extends StatefulWidget {
   const UserScreen({Key? key}) : super(key: key);
@@ -14,7 +15,7 @@ class UserScreen extends StatefulWidget {
 }
 
 class _UserScreenState extends State<UserScreen> {
-  var _name = 'Lorem Ipsum';
+  final _name = 'Lorem Ipsum';
   final TextEditingController myController = TextEditingController();
 
   @override
