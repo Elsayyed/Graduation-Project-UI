@@ -14,6 +14,7 @@ import 'constants/theme_info.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'innerScreens/allproducts_page.dart';
+import 'innerScreens/path_page.dart';
 import 'innerScreens/product_details.dart';
 
 void main() {
@@ -81,6 +82,7 @@ class _MyAppState extends State<MyApp> {
                   productsScreen.routeName: (context) => const productsScreen(),
                   productDetails.routeName: (context) => const productDetails(),
                   categoryScreen.routeName: (context) => const categoryScreen(),
+                  pathDisplay.routeName: (context) => const pathDisplay(),
                 },
                 home: const FetchScreen());
             // home: const HomeScreen());

@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:provider/provider.dart';
 import 'package:shopping_app_ui/services/utilMethods.dart';
 import 'package:shopping_app_ui/widgets/text_widget.dart';
+import '../../innerScreens/path_page.dart';
 import '../../provider/cart_provider.dart';
 import '../../services/utils.dart';
 import 'cart_widget.dart';
@@ -58,7 +60,7 @@ class CartScreen extends StatelessWidget {
                 const SizedBox(
                   width: 8,
                 ),
-                NavigateButton(color: color),
+                NavigateButton(color: color, context: context),
                 const Spacer(),
                 TextWidget(
                   text: 'Total \$${totalPrice.toStringAsFixed(2)}',
@@ -87,7 +89,14 @@ class CartScreen extends StatelessWidget {
     );
   }
 
-  Widget NavigateButton({required Color color}) {
+  Widget NavigateButton({required Color color, required BuildContext context}) {
+
+    final data = <String, List<int>>{
+      //optimization concat the coordinates as a string id, if given again
+      //use memoization for the calculated paths!
+      "coordinates": [1,2,4,3,10,20,29,25],
+    };
+
     return Material(
       elevation: 2,
       color: Colors.green,
@@ -96,7 +105,21 @@ class CartScreen extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: InkWell(
           borderRadius: BorderRadius.circular(10),
-          onTap: () {},
+
+          onTap: () async {
+            UtilMethods.navigateTo(
+                context: context,
+                routeName: pathDisplay.routeName);
+
+            CollectionReference shoppingListCoordCollection =
+            FirebaseFirestore.instance.collection('shopping-list-coord');
+
+            await shoppingListCoordCollection.doc('JHVDFhzmHxvhLmoHy8Mw').set(data)
+                .onError((FirebaseException e, _) => print("Error writing document: $e"))
+                .onError((e, _) => print("Error writing document: $e"));
+
+            print('I\'ve arrived');
+          },
           child: TextWidget(
               text: 'Finalize & Navigate', color: color, textSize: 16),
         ),

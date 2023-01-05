@@ -11,9 +11,7 @@ class FetchScreen extends StatefulWidget {
   State<FetchScreen> createState() => _FetchScreenState();
 }
 
-
 class _FetchScreenState extends State<FetchScreen> {
-
 
   @override
   void initState() {
@@ -31,5 +29,5 @@ class _FetchScreenState extends State<FetchScreen> {
   Widget build(BuildContext context) {
     return Container();
   }
-  
+
 }
